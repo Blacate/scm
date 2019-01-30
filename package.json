@@ -1,0 +1,38 @@
+{
+  "name": "scm",
+  "version": "0.0.0",
+  "description": "ssh config manager",
+  "main": "dist/index.js",
+  "author": "Neail",
+  "license": "MIT",
+  "private": false,
+  "bin": "./bin/scm",
+  "scripts": {
+    "clean": "rm -rf dist/*",
+    "prebuild": "npm run clean",
+    "build": "tsc -p tsconfig.json",
+    "format": "lint-staged",
+    "pretest": "npm run build",
+    "test": "mocha -r ts-node/register test/**/*.spec.ts",
+    "prepublishOnly": "npm run build",
+    "scm": "./bin/scm"
+  },
+  "devDependencies": {
+    "@types/chai": "^4.1.7",
+    "@types/mocha": "^5.2.5",
+    "@types/node": "^10.12.18",
+    "babel-eslint": "^10.0.1",
+    "chai": "^4.2.0",
+    "eslint": "^5.12.1",
+    "eslint-config-alloy": "^1.4.2",
+    "eslint-plugin-typescript": "^0.14.0",
+    "lint-staged": "^8.1.0",
+    "mocha": "^5.2.0",
+    "prettier": "^1.16.0",
+    "ts-node": "^7.0.1",
+    "tslint": "^5.12.1",
+    "typescript": "^3.2.4",
+    "typescript-eslint-parser": "^22.0.0"
+  },
+  "dependencies": {}
+}
