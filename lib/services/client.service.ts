@@ -1,4 +1,4 @@
-import { Clients } from './interfaces/client.interface';
+import { Clients } from '../interfaces/client.interface';
 import prompts = require('prompts');
 
 export class ClientService {
@@ -48,6 +48,9 @@ export class ClientService {
 
   print(host: string) {
     const clientItem = this.findOne(host);
+    if (!this.findOne(host)) {
+      return console.log(`Host: ${host} is not exist!`);
+    }
     console.log(`Host: ${host}`);
     console.log(`HostName: ${clientItem.hostname}`);
     console.log(`User: ${clientItem.user}`);
@@ -66,7 +69,7 @@ export class ClientService {
 
   async delete(host: string) {
     if (!this.findOne(host)) {
-      return console.log(`Host: ${host} is not exist.`);
+      return console.log(`Host: ${host} is not exist!`);
     }
     this.print(host);
     const { value } = await prompts({
@@ -81,6 +84,9 @@ export class ClientService {
   }
 
   async update(oldHost: string) {
+    if (!this.findOne(oldHost)) {
+      return console.log(`Host: ${oldHost} is not exist!`);
+    }
     const clientItem = this.findOne(oldHost);
     delete this.clients[oldHost];
     const { host, hostname, user, port } = await prompts([

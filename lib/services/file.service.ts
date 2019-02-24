@@ -1,5 +1,5 @@
-import { Clients } from './interfaces/client.interface';
-import { ScmConfig } from './interfaces/file.interface';
+import { Clients } from '../interfaces/client.interface';
+import { ScmConfig } from '../interfaces/file.interface';
 import { readFileSync, writeFileSync } from 'fs';
 
 export class FileService {
