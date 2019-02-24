@@ -1,7 +1,10 @@
 import { ClientService } from './services/client.service';
 import { FileService } from './services/file.service';
 import * as program from 'commander';
-const path = '~/.ssh';
+import { join } from 'path';
+import { homedir } from 'os';
+
+const path = join(homedir(), '.ssh');
 
 const scm = async () => {
   program
@@ -26,6 +29,23 @@ const scmList = async () => {
     .description('List all ssh clients')
     .parse(process.argv);
   clientService.printAll();
+};
+
+const scmFind = async () => {
+  // 读取配置文件
+  const fileService = new FileService(path);
+  const clients = fileService.getClients();
+  const clientService = new ClientService(clients);
+  // 解析命令 todo
+  program
+    .version(require('../package').version)
+    .usage('<host>')
+    .description('Find one of the ssh client')
+    .parse(process.argv);
+  if (!program.args[0]) {
+    return program.outputHelp();
+  }
+  clientService.print(program.args[0]);
 };
 
 const scmAdd = async () => {
@@ -79,26 +99,6 @@ const scmDelete = async () => {
     return program.outputHelp();
   }
   await clientService.delete(program.args[0]);
-  // 保存配置文件
-  fileService.updateClients(clientService.fetch());
-  fileService.writeConfig();
-};
-
-const scmFind = async () => {
-  // 读取配置文件
-  const fileService = new FileService(path);
-  const clients = fileService.getClients();
-  const clientService = new ClientService(clients);
-  // 解析命令 todo
-  program
-    .version(require('../package').version)
-    .usage('<host>')
-    .description('Find one of the ssh client')
-    .parse(process.argv);
-  if (!program.args[0]) {
-    return program.outputHelp();
-  }
-  clientService.print(program.args[0]);
   // 保存配置文件
   fileService.updateClients(clientService.fetch());
   fileService.writeConfig();

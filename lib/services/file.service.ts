@@ -1,14 +1,15 @@
 import { Clients } from '../interfaces/client.interface';
 import { ScmConfig } from '../interfaces/file.interface';
 import { readFileSync, writeFileSync } from 'fs';
+import { join } from 'path';
 
 export class FileService {
   private scmConfig: ScmConfig;
   private configPath: string;
   private sshConfigPath: string;
   constructor(configDir: string) {
-    this.configPath = `${configDir}/scm.json`;
-    this.sshConfigPath = `${configDir}/config`;
+    this.configPath = join(configDir, 'scm.json');
+    this.sshConfigPath = join(configDir, 'config');
     const file = readFileSync(this.configPath, {
       encoding: 'utf8',
     });
