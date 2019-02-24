@@ -61,6 +61,7 @@ export class ClientService {
     console.log('Host'.padEnd(20), 'HostName'.padEnd(20), 'User'.padEnd(10), 'Port'.padEnd(10));
     console.log('-'.repeat(60));
     const hostArr = Object.keys(this.clients);
+    hostArr.sort();
     hostArr.forEach(host => {
       const item = this.clients[host];
       console.log(host.padEnd(20), item.hostname.padEnd(20), item.user.padEnd(10), item.port.toString().padEnd(10));
