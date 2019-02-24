@@ -11,7 +11,10 @@
     "sourceMap": false,
     "outDir": "./dist",
     "rootDir": "./lib",
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "lib": [
+      "es2017"
+    ]
   },
   "include": [
     "lib/**/*"

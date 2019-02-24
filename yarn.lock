@@ -126,6 +126,11 @@
   resolved "http://registry.npm.taobao.org/@types/node/download/@types/node-10.12.18.tgz#1d3ca764718915584fcd9f6344621b7672665c67"
   integrity sha1-HTynZHGJFVhPzZ9jRGIbdnJmXGc=
 
+"@types/prompts@^1.2.0":
+  version "1.2.0"
+  resolved "http://registry.npm.taobao.org/@types/prompts/download/@types/prompts-1.2.0.tgz#891e73f735ad5e82e8adae3a99424128e105fb62"
+  integrity sha1-iR5z9zWtXoLora46mUJBKOEF+2I=
+
 acorn-jsx@^5.0.0:
   version "5.0.1"
   resolved "http://registry.npm.taobao.org/acorn-jsx/download/acorn-jsx-5.0.1.tgz#32a064fd925429216a09b141102bfdd185fae40e"
@@ -1337,6 +1342,11 @@ kind-of@^6.0.0, kind-of@^6.0.2:
   resolved "http://registry.npm.taobao.org/kind-of/download/kind-of-6.0.2.tgz#01146b36a6218e64e58f3a8d66de5d7fc6f6d051"
   integrity sha1-ARRrNqYhjmTljzqNZt5df8b20FE=
 
+kleur@^3.0.2:
+  version "3.0.2"
+  resolved "http://registry.npm.taobao.org/kleur/download/kleur-3.0.2.tgz#83c7ec858a41098b613d5998a7b653962b504f68"
+  integrity sha1-g8fshYpBCYthPVmYp7ZTlitQT2g=
+
 leven@^2.1.0:
   version "2.1.0"
   resolved "http://registry.npm.taobao.org/leven/download/leven-2.1.0.tgz#c2e7a9f772094dee9d34202ae8acce4687875580"
@@ -1806,6 +1816,14 @@ progress@^2.0.0:
   resolved "http://registry.npm.taobao.org/progress/download/progress-2.0.3.tgz#7e8cf8d8f5b8f239c1bc68beb4eb78567d572ef8"
   integrity sha1-foz42PW48jnBvGi+tOt4Vn1XLvg=
 
+prompts@^2.0.3:
+  version "2.0.3"
+  resolved "http://registry.npm.taobao.org/prompts/download/prompts-2.0.3.tgz#c5ccb324010b2e8f74752aadceeb57134c1d2522"
+  integrity sha1-xcyzJAELLo90dSqtzutXE0wdJSI=
+  dependencies:
+    kleur "^3.0.2"
+    sisteransi "^1.0.0"
+
 pump@^3.0.0:
   version "3.0.0"
   resolved "http://registry.npm.taobao.org/pump/download/pump-3.0.0.tgz#b4a2116815bde2f4e1ea602354e8c75565107a64"
@@ -1968,6 +1986,11 @@ simple-git@^1.85.0:
   integrity sha1-Es/68mHBTW9FD3/bhsIczulos4M=
   dependencies:
     debug "^4.0.1"
+
+sisteransi@^1.0.0:
+  version "1.0.0"
+  resolved "http://registry.npm.taobao.org/sisteransi/download/sisteransi-1.0.0.tgz#77d9622ff909080f1c19e5f4a1df0c1b0a27b88c"
+  integrity sha1-d9liL/kJCA8cGeX0od8MGwonuIw=
 
 slice-ansi@0.0.4:
   version "0.0.4"

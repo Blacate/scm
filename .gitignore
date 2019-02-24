@@ -20,3 +20,5 @@ dist
 
 # log
 yarn-error.log
+
+lib/.temp

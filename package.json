@@ -15,7 +15,8 @@
     "pretest": "npm run build",
     "test": "mocha -r ts-node/register test/**/*.spec.ts",
     "prepublishOnly": "npm run build",
-    "scm": "./bin/scm"
+    "scm": "./bin/scm",
+    "dev": "ts-node dev.ts"
   },
   "devDependencies": {
     "@types/chai": "^4.1.7",
@@ -32,7 +33,10 @@
     "ts-node": "^7.0.1",
     "tslint": "^5.12.1",
     "typescript": "^3.2.4",
-    "typescript-eslint-parser": "^22.0.0"
+    "typescript-eslint-parser": "^22.0.0",
+    "@types/prompts": "^1.2.0"
   },
-  "dependencies": {}
+  "dependencies": {
+    "prompts": "^2.0.3"
+  }
 }
