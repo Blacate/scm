@@ -5,6 +5,7 @@
   "main": "dist/index.js",
   "author": "Neail",
   "license": "MIT",
+  "repository": "https://github.com/Blacate/scm",
   "private": false,
   "bin": {
     "scm": "./bin/scm",
