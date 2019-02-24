@@ -1,7 +1,7 @@
 import { ClientService } from './services/client.service';
 import { FileService } from './services/file.service';
 import * as program from 'commander';
-const path = '/Users/blacate/workspace/.temp/.ssh';
+const path = '~/.ssh';
 
 const scm = async () => {
   program
