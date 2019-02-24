@@ -1,6 +1,6 @@
 {
-  "name": "scm",
-  "version": "0.0.0",
+  "name": "node-scm",
+  "version": "0.0.1",
   "description": "ssh config manager",
   "main": "dist/index.js",
   "author": "Neail",
