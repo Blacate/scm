@@ -45,6 +45,7 @@
   },
   "dependencies": {
     "commander": "^2.19.0",
+    "is-json": "^2.0.1",
     "prompts": "^2.0.3"
   }
 }

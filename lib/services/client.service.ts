@@ -1,5 +1,5 @@
 import { Clients } from '../interfaces/client.interface';
-import prompts = require('prompts');
+import * as prompts from 'prompts';
 
 export class ClientService {
   // eslint-disable-next-line

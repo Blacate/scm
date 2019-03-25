@@ -21,6 +21,7 @@ const scm = async () => {
 const scmList = async () => {
   // 读取配置文件
   const fileService = new FileService(path);
+  await fileService.onModuleInit();
   const clients = fileService.getClients();
   const clientService = new ClientService(clients);
   // 解析命令 todo
@@ -34,6 +35,7 @@ const scmList = async () => {
 const scmFind = async () => {
   // 读取配置文件
   const fileService = new FileService(path);
+  await fileService.onModuleInit();
   const clients = fileService.getClients();
   const clientService = new ClientService(clients);
   // 解析命令 todo
@@ -51,6 +53,7 @@ const scmFind = async () => {
 const scmAdd = async () => {
   // 读取配置文件
   const fileService = new FileService(path);
+  await fileService.onModuleInit();
   const clients = fileService.getClients();
   const clientService = new ClientService(clients);
   // 解析命令 todo
@@ -67,6 +70,7 @@ const scmAdd = async () => {
 const scmUpdate = async () => {
   // 读取配置文件
   const fileService = new FileService(path);
+  await fileService.onModuleInit();
   const clients = fileService.getClients();
   const clientService = new ClientService(clients);
   // 解析命令 todo
@@ -87,6 +91,7 @@ const scmUpdate = async () => {
 const scmDelete = async () => {
   // 读取配置文件
   const fileService = new FileService(path);
+  await fileService.onModuleInit();
   const clients = fileService.getClients();
   const clientService = new ClientService(clients);
   // 解析命令 todo
