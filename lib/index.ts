@@ -66,7 +66,7 @@ const scmFilter = async () => {
   if (!program.args[0]) {
     return program.outputHelp();
   }
-  clientService.printAll();
+  clientService.filterAndPrint(program.args[0]);
 };
 
 const scmAdd = async () => {

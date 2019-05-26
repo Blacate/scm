@@ -31,6 +31,9 @@ export class ClientService {
         initial: 22,
       },
     ]);
+    if (!host || !hostname || !port || user) {
+      throw new Error('Please enter full information!');
+    }
     this.clients[host] = {
       hostname,
       user,
@@ -58,14 +61,18 @@ export class ClientService {
   }
 
   printAll() {
-    console.log('Host'.padEnd(20), 'HostName'.padEnd(20), 'User'.padEnd(10), 'Port'.padEnd(10));
-    console.log('-'.repeat(60));
+    this.printList(this.clients);
+  }
+
+  filterAndPrint(keywords: string) {
+    const list: Clients = {};
     const hostArr = Object.keys(this.clients);
-    hostArr.sort();
     hostArr.forEach(host => {
-      const item = this.clients[host];
-      console.log(host.padEnd(20), item.hostname.padEnd(20), item.user.padEnd(10), item.port.toString().padEnd(10));
+      if (host.includes(keywords)) {
+        list[host] = this.clients[host];
+      }
     });
+    this.printList(list);
   }
 
   async delete(host: string) {
@@ -117,11 +124,25 @@ export class ClientService {
         initial: clientItem.port,
       },
     ]);
+    if (!host || !hostname || !port || user) {
+      throw new Error('Please enter full information!');
+    }
     this.clients[host] = {
       hostname,
       user,
       port,
     };
+  }
+
+  private printList(list: Clients) {
+    console.log('Host'.padEnd(20), 'HostName'.padEnd(20), 'User'.padEnd(10), 'Port'.padEnd(10));
+    console.log('-'.repeat(60));
+    const hostArr = Object.keys(list);
+    hostArr.sort();
+    hostArr.forEach(host => {
+      const item = list[host];
+      console.log(host.padEnd(20), item.hostname.padEnd(20), item.user.padEnd(10), item.port.toString().padEnd(10));
+    });
   }
 
 }
