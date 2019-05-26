@@ -52,7 +52,7 @@ export class FileService implements OnModuleInit {
         // 覆写
         if (overwrite) {
           const bakFile = join(this.configDir, `scm.json.${Date.now()}`);
-          console.log(bakFile);
+          console.log(`File backup in ${bakFile}`);
           renameSync(this.configPath, bakFile);
           this.scmConfig = defaultConfig;
         } else {
