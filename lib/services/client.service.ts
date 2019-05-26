@@ -5,12 +5,13 @@ export class ClientService {
   // eslint-disable-next-line
   constructor(private clients: Clients) {}
 
-  async create() {
+  async create(defaultHost: string = '') {
     const { host, hostname, user, port } = await prompts([
       {
         type: 'text',
         name: 'host',
         message: 'Host: ',
+        initial: defaultHost,
         validate: clientName => (this.findOne(clientName) ? 'Already exist!' : true),
       },
       {
@@ -31,7 +32,7 @@ export class ClientService {
         initial: 22,
       },
     ]);
-    if (!host || !hostname || !port || user) {
+    if (!host || !hostname || !port || !user) {
       throw new Error('Please enter full information!');
     }
     this.clients[host] = {
@@ -124,7 +125,7 @@ export class ClientService {
         initial: clientItem.port,
       },
     ]);
-    if (!host || !hostname || !port || user) {
+    if (!host || !hostname || !port || !user) {
       throw new Error('Please enter full information!');
     }
     this.clients[host] = {

@@ -31,6 +31,9 @@ const scmList = async () => {
     .description('List all ssh clients')
     .parse(process.argv);
   clientService.printAll();
+  // 保存配置文件
+  fileService.updateClients(clientService.fetch());
+  fileService.writeConfig();
 };
 
 const scmFind = async () => {
@@ -49,6 +52,9 @@ const scmFind = async () => {
     return program.outputHelp();
   }
   clientService.print(program.args[0]);
+  // 保存配置文件
+  fileService.updateClients(clientService.fetch());
+  fileService.writeConfig();
 };
 
 const scmFilter = async () => {
@@ -67,6 +73,9 @@ const scmFilter = async () => {
     return program.outputHelp();
   }
   clientService.filterAndPrint(program.args[0]);
+  // 保存配置文件
+  fileService.updateClients(clientService.fetch());
+  fileService.writeConfig();
 };
 
 const scmAdd = async () => {
@@ -80,7 +89,7 @@ const scmAdd = async () => {
     .version(require('../package').version)
     .description('Add a ssh client')
     .parse(process.argv);
-  await clientService.create();
+  await clientService.create(program.args[0]);
   // 保存配置文件
   fileService.updateClients(clientService.fetch());
   fileService.writeConfig();
