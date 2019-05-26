@@ -13,6 +13,7 @@
     "scm-update": "./bin/scm-update",
     "scm-delete": "./bin/scm-delete",
     "scm-find": "./bin/scm-find",
+    "scm-filter": "./bin/scm-filter",
     "scm-add": "./bin/scm-add"
   },
   "scripts": {

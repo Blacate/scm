@@ -12,6 +12,7 @@ const scm = async () => {
     .usage('<command> [host] [options]')
     .command('list', 'List all ssh clients')
     .command('find <host>', 'Find one of the ssh clients')
+    .command('filter <keywords>', 'Filter by keywords')
     .command('add', 'Add a ssh client')
     .command('update <host>', 'Update one of the ssh client')
     .command('delete <host>', 'Delete one of the ssh client')
@@ -48,6 +49,24 @@ const scmFind = async () => {
     return program.outputHelp();
   }
   clientService.print(program.args[0]);
+};
+
+const scmFilter = async () => {
+  // 读取配置文件
+  const fileService = new FileService(path);
+  await fileService.onModuleInit();
+  const clients = fileService.getClients();
+  const clientService = new ClientService(clients);
+  // 解析命令 todo
+  program
+    .version(require('../package').version)
+    .usage('<host>')
+    .description('Find one of the ssh client')
+    .parse(process.argv);
+  if (!program.args[0]) {
+    return program.outputHelp();
+  }
+  clientService.printAll();
 };
 
 const scmAdd = async () => {
@@ -116,4 +135,5 @@ export {
   scmUpdate,
   scmFind,
   scmDelete,
+  scmFilter,
 };
