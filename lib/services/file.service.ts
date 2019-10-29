@@ -2,7 +2,7 @@
 import { OnModuleInit } from '../interfaces/on_module_init.interface';
 import { Clients } from '../interfaces/client.interface';
 import { ScmConfig } from '../interfaces/file.interface';
-import { readFileSync, writeFileSync, existsSync, renameSync } from 'fs';
+import { readFileSync, writeFileSync, existsSync, renameSync, appendFileSync } from 'fs';
 import { join } from 'path';
 import * as isJson from 'is-json';
 import * as prompts from 'prompts';
@@ -14,9 +14,11 @@ const defaultConfig = {
 export class FileService implements OnModuleInit {
   private scmConfig: ScmConfig;
   private configPath: string;
+  private generatedConfigPath: string;
   private sshConfigPath: string;
   constructor(private configDir: string) {
     this.configPath = join(configDir, 'scm.json');
+    this.generatedConfigPath = join(configDir, 'scm_config');
     this.sshConfigPath = join(configDir, 'config');
   }
 
@@ -73,8 +75,10 @@ export class FileService implements OnModuleInit {
   writeConfig() {
     // scm config
     writeFileSync(this.configPath, JSON.stringify(this.scmConfig, null, 4), 'utf8');
-    // ssh config
-    writeFileSync(this.sshConfigPath, this.generateSshConfig(), 'utf8');
+    // ssh scm_config
+    writeFileSync(this.generatedConfigPath, this.generateSshConfig(), 'utf8');
+    // update include
+    this.setSshConfigInclude();
   }
 
   private generateSshConfig() {
@@ -84,6 +88,19 @@ export class FileService implements OnModuleInit {
       return `Host ${host}\n    HostName ${item.hostname}\n    User ${item.user}\n    Port ${item.port}\n`;
     });
     return clientArr.join('\n');
+  }
+
+  private setSshConfigInclude() {
+    if (!existsSync(this.sshConfigPath)) {
+      return writeFileSync(this.sshConfigPath, '\nInclude scm_config\n');
+    }
+    const content = readFileSync(this.sshConfigPath, {
+      encoding: 'utf8',
+    });
+    const reg = /Include scm_config/;
+    if (!reg.test(content)) {
+      appendFileSync(this.sshConfigPath, '\nInclude scm_config\n');
+    }
   }
 
 }
