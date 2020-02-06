@@ -1,10 +1,27 @@
 import * as yargs from 'yargs';
-import { InitCommand } from './commands/init_command';
+import { AddCommand } from './commands/add_command';
+import { DeleteCommand } from './commands/delete_command';
+import { GetCommand } from './commands/get_command';
+import { ListCommand } from './commands/list_command';
+import { SearchCommand } from './commands/search_command';
+import { UpdateCommand } from './commands/update_command';
+import { closeConnection, initConnection } from './utils/handle_connection';
+import { SshClientService } from './features/ssh_client/ssh_client.service';
 
-const main = () => {
-    yargs
+
+const main = async () => {
+  await initConnection();
+  yargs
     .usage("Usage: $0 <command> [options]")
-    .command(new InitCommand())
+    .command(new AddCommand())
+    .command(new DeleteCommand())
+    .command(new GetCommand())
+    .command(new ListCommand())
+    .command(new SearchCommand())
+    .command(new UpdateCommand())
+    .onFinishCommand(async () => {
+      await closeConnection();
+    })
     .demandCommand(1)
     .strict()
     .alias("v", "version")
@@ -14,5 +31,5 @@ const main = () => {
 }
 
 export {
-    main
+  main
 }
