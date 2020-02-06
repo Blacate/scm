@@ -1,0 +1,19 @@
+{
+  "name": "node-scm",
+  "version": "0.0.1",
+  "description": "ssh config manager with sql",
+  "repository": "https://github.com/Blacate/scm",
+  "author": "Neail <blacated@gmail.com>",
+  "license": "MIT",
+  "private": false,
+  "bin": {
+    "scm": "./bin/scm.ts"
+  },
+  "dependencies": {
+    "yargs": "^15.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^13.7.0",
+    "@types/yargs": "^15.0.3"
+  }
+}
