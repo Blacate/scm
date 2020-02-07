@@ -23,7 +23,14 @@ export class SshClient {
     nullable: false,
     comment: '主机名'
   })
-  hostName: string;
+  server: string;
+
+  @Column({
+    default: '',
+    length: 100,
+    comment: '类别'
+  })
+  category: string;
 
   @Column({
     length: 45,

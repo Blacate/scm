@@ -14,6 +14,9 @@ export class SshClientService {
     return await this.sshClientRepository.find({
       where: {
         isDeleted: false,
+      },
+      order: {
+        category: 'ASC'
       }
     });
   }

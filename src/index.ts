@@ -20,7 +20,6 @@ const main = async () => {
     .command(new SearchCommand())
     .command(new UpdateCommand())
     .onFinishCommand(async () => {
-      await closeConnection();
     })
     .demandCommand(1)
     .strict()
@@ -28,6 +27,7 @@ const main = async () => {
     .help("h")
     .alias("h", "help")
     .argv;
+  await closeConnection();
 }
 
 export {

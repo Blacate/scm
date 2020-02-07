@@ -1,6 +1,7 @@
 export interface UpdateSshClient {
   alias?: string;
-  hostName?: string;
+  server?: string;
   user?: string;
   port?: number;
+  category?: string;
 }
