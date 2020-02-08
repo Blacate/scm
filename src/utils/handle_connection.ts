@@ -1,4 +1,4 @@
-import { createConnection, getConnection } from 'typeorm';
+import { createConnection, getConnection, ConnectionOptions } from 'typeorm';
 import { homedir } from 'os';
 import { join } from 'path';
 
@@ -7,8 +7,14 @@ import { join } from 'path';
 // tslint:disable-next-line: no-var-requires
 const config = require(join(homedir(), '.ssh/node_scm.json'));
 
+const connectionOpions = config.db
+
+if (connectionOpions.type === 'sqlite') {
+  connectionOpions.database = connectionOpions.database.replace(/^~/, homedir())
+}
+
 const initConnection = async () => {
-  await createConnection(config.db).catch(err => {
+  await createConnection(connectionOpions).catch(err => {
     console.log(err);
     process.exit();
   });
