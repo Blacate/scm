@@ -9,13 +9,13 @@ let config: {
 };
 
 const defaultConfig = `{
-  "db": {
+  "sqlite": {
     "type": "sqlite",
     "database": "~/.ssh/scm.sqlite",
     "entities": ["dist/**/**.entity{.ts,.js}"],
     "synchronize": true
   },
-  "mysqlDB": {
+  "mysql": {
     "type": "mysql",
     "host": "127.0.0.1",
     "port": 3306,
@@ -24,7 +24,8 @@ const defaultConfig = `{
     "database": "scm",
     "entities": ["dist/**/**.entity{.ts,.js}"],
     "synchronize": true
-  }
+  },
+  "use": "sqlite"
 }
 `;
 
@@ -41,21 +42,25 @@ const getConfig = () => {
     // tslint:disable-next-line: no-var-requires
     const loadedConfig = require(configPath);
 
+    const connectionOptions = loadedConfig[loadedConfig.use]
+
     // 修复sqlite中homedir为～的问题
-    if (loadedConfig.db.type === 'sqlite') {
-      loadedConfig.db.database = loadedConfig.db.database.replace(
+    if (connectionOptions.type === 'sqlite') {
+      connectionOptions.database = connectionOptions.database.replace(
         /^~/,
         homedir(),
       );
     }
 
     // 修复entities相对路径问题
-    loadedConfig.db.entities = loadedConfig.db.entities.map((item: string) =>
+    connectionOptions.entities = connectionOptions.entities.map((item: string) =>
       item.replace(/^dist/, resolve(__dirname, '..')),
     );
 
     // 解决connectionOptions中属性为readonly问题
-    config = loadedConfig;
+    config = {
+      db: connectionOptions,
+    };
     return config;
   } catch (error) {
     printError(error);
