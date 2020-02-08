@@ -29,5 +29,10 @@
     "rimraf": "^3.0.1",
     "tslint": "^6.0.0",
     "typescript": "^3.7.5"
-  }
+  },
+  "files": [
+    "bin",
+    "dist",
+    "README.md"
+  ]
 }
