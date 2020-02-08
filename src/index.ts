@@ -5,11 +5,9 @@ import { GetCommand } from './commands/get_command';
 import { ListCommand } from './commands/list_command';
 import { SearchCommand } from './commands/search_command';
 import { UpdateCommand } from './commands/update_command';
-import { closeConnection, initConnection } from './utils/handle_connection';
-import { SshClientService } from './features/ssh_client/ssh_client.service';
+import { closeConnection } from './utils/handle_connection';
 
 const main = async () => {
-  await initConnection();
   // tslint:disable-next-line: no-unused-expression
   yargs
     .usage('Usage: $0 <command> [options]')

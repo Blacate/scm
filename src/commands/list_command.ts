@@ -10,9 +10,8 @@ export class ListCommand implements yargs.CommandModule {
   describe = 'List all ssh clients.';
 
   builder(argv: yargs.Argv) {
-    return argv.middleware(
-      () => (this.sshClientService = new SshClientService()),
-    );
+    return argv
+    .middleware([initConnection, () => (this.sshClientService = new SshClientService())]);
   }
 
   async handler(args: yargs.Arguments) {

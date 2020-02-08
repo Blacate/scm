@@ -1,6 +1,7 @@
 import * as yargs from 'yargs';
 import { SshClientService } from '../features/ssh_client/ssh_client.service';
 import { printList } from '../utils/print';
+import { initConnection } from '../utils/handle_connection';
 
 export class SearchCommand implements yargs.CommandModule {
   private sshClientService: SshClientService;
@@ -10,7 +11,7 @@ export class SearchCommand implements yargs.CommandModule {
 
   builder(argv: yargs.Argv) {
     return argv
-      .middleware(() => (this.sshClientService = new SshClientService()))
+      .middleware([initConnection, () => (this.sshClientService = new SshClientService())])
       .option('k', {
         alias: 'keyword',
         describe: 'search keyword',
