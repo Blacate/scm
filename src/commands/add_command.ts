@@ -59,13 +59,19 @@ export class AddCommand implements yargs.CommandModule {
           name: 'alias',
           message: 'Alias: ',
           initial: typeof item.alias === 'string' ? item.alias : '',
-          validate: async clientName => (await this.sshClientService.getByAlias(clientName) ? 'Already exist!' : true),
+          validate: async clientName => {
+            if (!clientName) {
+              return 'Alias is must!'
+            }
+            return await this.sshClientService.getByAlias(clientName) ? 'Already exist!' : true
+          },
         },
         {
           type: 'text',
           name: 'server',
           initial: typeof item.server === 'string' ? item.server : '',
           message: 'Server: ',
+          validate: inputServer => Boolean(inputServer) ? true : 'Server is must!'
         },
         {
           type: 'text',
