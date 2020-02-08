@@ -26,8 +26,10 @@ const main = async () => {
     .alias("v", "version")
     .help("h")
     .alias("h", "help")
+    .onFinishCommand(async () => {
+      await closeConnection();
+    })
     .argv;
-  await closeConnection();
 }
 
 export {

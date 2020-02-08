@@ -1,14 +1,11 @@
 import { createConnection, getConnection } from 'typeorm'
-import { SshClient } from '../features/ssh_client/ssh_client.entity';
+import { homedir } from 'os';
+import { join } from 'path';
+
+const config = require(join(homedir(), '.ssh/node_scm.json'))
 
 const initConnection = async () => {
-  await createConnection({
-    type: 'sqlite',
-    database: '/tmp/scm.sqlite',
-    entities: [SshClient],
-    synchronize: true,
-    
-  })
+  await createConnection(config.db)
     .catch(err => {
       console.log(err);
       process.exit();
@@ -17,8 +14,8 @@ const initConnection = async () => {
 
 const closeConnection = async () => {
   const connection = getConnection()
-  if (connection) {
-    connection.close
+  if (connection && connection.isConnected) {
+    await connection.close()
   }
 }
 
