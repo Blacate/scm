@@ -10,20 +10,20 @@ export class GetCommand implements yargs.CommandModule {
 
   builder(argv: yargs.Argv) {
     return argv
-      .middleware(() => this.sshClientService = new SshClientService)
+      .middleware(() => (this.sshClientService = new SshClientService()))
       .option('a', {
         alias: 'alias',
         describe: 'ssh client alias',
         demand: true,
-      })
+      });
   }
-  
+
   async handler(args: yargs.Arguments) {
-    const result = await this.sshClientService.getByAlias(args.alias as string)
+    const result = await this.sshClientService.getByAlias(args.alias as string);
     if (result) {
-      printItem(result)
+      printItem(result);
     } else {
-      console.log(`Alias: ${args.alias} is not exist`)
+      console.log(`Alias: ${args.alias} is not exist`);
     }
   }
 }

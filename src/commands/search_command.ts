@@ -10,19 +10,21 @@ export class SearchCommand implements yargs.CommandModule {
 
   builder(argv: yargs.Argv) {
     return argv
-      .middleware(() => this.sshClientService = new SshClientService)
+      .middleware(() => (this.sshClientService = new SshClientService()))
       .option('k', {
         alias: 'keyword',
         describe: 'search keyword',
         demand: true,
-        type: 'string'
-      })
+        type: 'string',
+      });
   }
-  
+
   async handler(args: yargs.Arguments) {
     const originKeyword = (args.keyword as string).trim();
-    const keyword = /\*/.test(originKeyword) ? originKeyword.replace(/\*/g, '%') : `*${originKeyword}*`.replace(/\*/g, '%')
+    const keyword = /\*/.test(originKeyword)
+      ? originKeyword.replace(/\*/g, '%')
+      : `*${originKeyword}*`.replace(/\*/g, '%');
     const result = await this.sshClientService.search(keyword);
-    printList(result)
+    printList(result);
   }
 }

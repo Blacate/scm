@@ -8,30 +8,25 @@ import { UpdateCommand } from './commands/update_command';
 import { closeConnection, initConnection } from './utils/handle_connection';
 import { SshClientService } from './features/ssh_client/ssh_client.service';
 
-
 const main = async () => {
   await initConnection();
   yargs
-    .usage("Usage: $0 <command> [options]")
+    .usage('Usage: $0 <command> [options]')
     .command(new AddCommand())
     .command(new DeleteCommand())
     .command(new GetCommand())
     .command(new ListCommand())
     .command(new SearchCommand())
     .command(new UpdateCommand())
-    .onFinishCommand(async () => {
-    })
+    .onFinishCommand(async () => {})
     .demandCommand(1)
     .strict()
-    .alias("v", "version")
-    .help("h")
-    .alias("h", "help")
+    .alias('v', 'version')
+    .help('h')
+    .alias('h', 'help')
     .onFinishCommand(async () => {
       await closeConnection();
-    })
-    .argv;
-}
+    }).argv;
+};
 
-export {
-  main
-}
+export { main };

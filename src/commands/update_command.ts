@@ -10,7 +10,7 @@ export class UpdateCommand implements yargs.CommandModule {
 
   builder(argv: yargs.Argv) {
     return argv
-      .middleware(() => this.sshClientService = new SshClientService)
+      .middleware(() => (this.sshClientService = new SshClientService()))
       .option('a', {
         alias: 'alias',
         describe: 'old ssh client alias',
@@ -20,35 +20,35 @@ export class UpdateCommand implements yargs.CommandModule {
       .option('r', {
         alias: 'rename',
         describe: 'new ssh client alias',
-        type: 'string'
+        type: 'string',
       })
       .option('s', {
         alias: 'server',
         describe: 'ssh client server',
-        type: 'string'
+        type: 'string',
       })
       .option('u', {
         alias: 'user',
         describe: 'ssh client user',
         type: 'string',
-        default: 'root'
+        default: 'root',
       })
       .option('p', {
         alias: 'port',
         describe: 'ssh client port',
         type: 'number',
-        default: 22
+        default: 22,
       })
       .option('c', {
         alias: 'category',
         describe: 'ssh client category',
-        type: 'string'
-      })
+        type: 'string',
+      });
   }
-  
+
   async handler(args: yargs.Arguments) {
     // todo add prompts
-    const data: UpdateSshClient = {}
+    const data: UpdateSshClient = {};
     if (args.rename) {
       data.alias = args.rename as string;
     }
@@ -64,6 +64,6 @@ export class UpdateCommand implements yargs.CommandModule {
     if (args.category) {
       data.category = args.category as string;
     }
-    await this.sshClientService.update(args.alias as string, data)
+    await this.sshClientService.update(args.alias as string, data);
   }
 }

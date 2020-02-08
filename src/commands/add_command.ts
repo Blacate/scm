@@ -1,5 +1,5 @@
 import * as yargs from 'yargs';
-import { initConnection } from '../utils/handle_connection'
+import { initConnection } from '../utils/handle_connection';
 import { SshClientService } from '../features/ssh_client/ssh_client.service';
 import { printItem } from '../utils/print';
 
@@ -11,38 +11,37 @@ export class AddCommand implements yargs.CommandModule {
 
   builder(argv: yargs.Argv) {
     return argv
-      .middleware(() => this.sshClientService = new SshClientService)
+      .middleware(() => (this.sshClientService = new SshClientService()))
       .option('a', {
         alias: 'alias',
         describe: 'ssh client alias',
-        type: 'string'
+        type: 'string',
       })
       .option('s', {
         alias: 'server',
         describe: 'ssh client server',
-        type: 'string'
+        type: 'string',
       })
       .option('u', {
         alias: 'user',
         describe: 'ssh client user',
         type: 'string',
-        default: 'root'
+        default: 'root',
       })
       .option('p', {
         alias: 'port',
         describe: 'ssh client port',
         type: 'number',
-        default: 22
+        default: 22,
       })
       .option('c', {
         alias: 'category',
         describe: 'ssh client category',
-        type: 'string'
+        type: 'string',
       })
-      .implies('a', 's')
-      
+      .implies('a', 's');
   }
-  
+
   async handler(args: yargs.Arguments) {
     const item = {
       alias: args.alias as string,
@@ -53,12 +52,12 @@ export class AddCommand implements yargs.CommandModule {
     };
     if (!item.alias || !item.server) {
       // todo use prompts
-      console.log('alias and server is must')
-      process.exit()
+      console.log('alias and server is must');
+      process.exit();
       const result = await this.sshClientService.create(item);
     } else {
       const result = await this.sshClientService.create(item);
-      printItem(result)
+      printItem(result);
     }
   }
 }

@@ -4,31 +4,31 @@ import { Entity, PrimaryGeneratedColumn, Column, Index } from 'typeorm';
 export class SshClient {
   @PrimaryGeneratedColumn({
     unsigned: true,
-    comment: 'ID'
+    comment: 'ID',
   })
   id: number;
 
   @Column({
     length: 45,
     nullable: false,
-    comment: '别名'
+    comment: '别名',
   })
   @Index({
-    unique: true
+    unique: true,
   })
   alias: string;
 
   @Column({
     name: 'host_name',
     nullable: false,
-    comment: '主机名'
+    comment: '主机名',
   })
   server: string;
 
   @Column({
     default: '',
     length: 100,
-    comment: '类别'
+    comment: '类别',
   })
   category: string;
 
@@ -49,8 +49,7 @@ export class SshClient {
   @Column({
     default: false,
     name: 'is_deleted',
-    comment: '是否删除'
+    comment: '是否删除',
   })
   isDeleted: boolean;
-
 }
