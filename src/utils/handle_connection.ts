@@ -2,6 +2,7 @@ import { createConnection, getConnection } from 'typeorm';
 import { homedir } from 'os';
 import { join } from 'path';
 
+// tslint:disable-next-line: no-var-requires
 const config = require(join(homedir(), '.ssh/node_scm.json'));
 
 const initConnection = async () => {

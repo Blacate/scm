@@ -10,6 +10,7 @@ import { SshClientService } from './features/ssh_client/ssh_client.service';
 
 const main = async () => {
   await initConnection();
+  // tslint:disable-next-line: no-unused-expression
   yargs
     .usage('Usage: $0 <command> [options]')
     .command(new AddCommand())
@@ -18,7 +19,6 @@ const main = async () => {
     .command(new ListCommand())
     .command(new SearchCommand())
     .command(new UpdateCommand())
-    .onFinishCommand(async () => {})
     .demandCommand(1)
     .strict()
     .alias('v', 'version')
