@@ -56,47 +56,54 @@ export class AddCommand implements yargs.CommandModule {
       category: args.category as string,
     };
     if (!item.alias || !item.server) {
-      const { alias, server, user, port, category } = await prompts([
+      const { alias, server, user, port, category } = await prompts(
+        [
+          {
+            type: 'text',
+            name: 'alias',
+            message: 'Alias: ',
+            initial: typeof item.alias === 'string' ? item.alias : '',
+            validate: async clientName => {
+              if (!clientName) {
+                return 'Alias is must!';
+              }
+              return (await this.sshClientService.getByAlias(clientName))
+                ? 'Already exist!'
+                : true;
+            },
+          },
+          {
+            type: 'text',
+            name: 'server',
+            initial: typeof item.server === 'string' ? item.server : '',
+            message: 'Server: ',
+            validate: inputServer =>
+              Boolean(inputServer) ? true : 'Server is must!',
+          },
+          {
+            type: 'text',
+            name: 'user',
+            message: 'User: ',
+            initial: 'root',
+          },
+          {
+            type: 'number',
+            name: 'port',
+            message: 'Port: ',
+            initial: 22,
+          },
+          {
+            type: 'text',
+            name: 'category',
+            message: 'Category: ',
+          },
+        ],
         {
-          type: 'text',
-          name: 'alias',
-          message: 'Alias: ',
-          initial: typeof item.alias === 'string' ? item.alias : '',
-          validate: async clientName => {
-            if (!clientName) {
-              return 'Alias is must!';
-            }
-            return (await this.sshClientService.getByAlias(clientName))
-              ? 'Already exist!'
-              : true;
+          onCancel: () => {
+            process.exit();
           },
         },
-        {
-          type: 'text',
-          name: 'server',
-          initial: typeof item.server === 'string' ? item.server : '',
-          message: 'Server: ',
-          validate: inputServer =>
-            Boolean(inputServer) ? true : 'Server is must!',
-        },
-        {
-          type: 'text',
-          name: 'user',
-          message: 'User: ',
-          initial: 'root',
-        },
-        {
-          type: 'number',
-          name: 'port',
-          message: 'Port: ',
-          initial: 22,
-        },
-        {
-          type: 'text',
-          name: 'category',
-          message: 'Category: ',
-        },
-      ]);
+      );
       await this.sshClientService.create({
         alias,
         server,

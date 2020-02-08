@@ -27,12 +27,19 @@ export class DeleteCommand implements yargs.CommandModule {
     const result = await this.sshClientService.getByAlias(args.alias as string);
     if (result) {
       printItem(result);
-      const { value } = await prompts({
-        type: 'confirm',
-        name: 'value',
-        message: 'Delete it?',
-        initial: false,
-      });
+      const { value } = await prompts(
+        {
+          type: 'confirm',
+          name: 'value',
+          message: 'Delete it?',
+          initial: false,
+        },
+        {
+          onCancel: () => {
+            process.exit();
+          },
+        },
+      );
       if (value) {
         await this.sshClientService.deleteByAlias(args.alias as string);
       }

@@ -68,7 +68,7 @@ const printExist = (alias: string) => {
   console.log(`Alias: ${alias} is exist.`);
 };
 
-const printError = err => {
+const printError = (err: any) => {
   console.log(err);
 };
 

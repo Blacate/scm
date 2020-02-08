@@ -81,46 +81,53 @@ export class UpdateCommand implements yargs.CommandModule {
       data.category = args.category as string;
     }
     if (promptsFlag) {
-      const promptsData = await prompts([
+      const promptsData = await prompts(
+        [
+          {
+            type: 'text',
+            name: 'alias',
+            message: 'Alias: ',
+            initial: oldSshClient.alias,
+            validate: async clientName => {
+              if (oldSshClient.alias !== clientName) {
+                return (await this.sshClientService.getByAlias(clientName))
+                  ? 'Already exist!'
+                  : true;
+              }
+              return true;
+            },
+          },
+          {
+            type: 'text',
+            name: 'server',
+            initial: oldSshClient.server,
+            message: 'Server: ',
+          },
+          {
+            type: 'text',
+            name: 'user',
+            message: 'User: ',
+            initial: oldSshClient.user,
+          },
+          {
+            type: 'number',
+            name: 'port',
+            message: 'Port: ',
+            initial: oldSshClient.port,
+          },
+          {
+            type: 'text',
+            name: 'category',
+            message: 'Category: ',
+            initial: oldSshClient.category,
+          },
+        ],
         {
-          type: 'text',
-          name: 'alias',
-          message: 'Alias: ',
-          initial: oldSshClient.alias,
-          validate: async clientName => {
-            if (oldSshClient.alias !== clientName) {
-              return (await this.sshClientService.getByAlias(clientName))
-                ? 'Already exist!'
-                : true;
-            }
-            return true;
+          onCancel: () => {
+            process.exit();
           },
         },
-        {
-          type: 'text',
-          name: 'server',
-          initial: oldSshClient.server,
-          message: 'Server: ',
-        },
-        {
-          type: 'text',
-          name: 'user',
-          message: 'User: ',
-          initial: oldSshClient.user,
-        },
-        {
-          type: 'number',
-          name: 'port',
-          message: 'Port: ',
-          initial: oldSshClient.port,
-        },
-        {
-          type: 'text',
-          name: 'category',
-          message: 'Category: ',
-          initial: oldSshClient.category,
-        },
-      ]);
+      );
       Object.assign(data, promptsData);
     }
     const result = await this.sshClientService.update(

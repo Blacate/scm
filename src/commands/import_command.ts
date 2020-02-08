@@ -44,6 +44,7 @@ export class ImportCommand implements yargs.CommandModule {
       printList(await this.sshClientService.fetchAll());
     } catch (e) {
       printError(e);
+      process.exit();
     }
   }
 }
