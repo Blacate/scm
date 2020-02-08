@@ -1,6 +1,6 @@
 import { ConnectionOptions } from 'typeorm';
 import { homedir } from 'os';
-import { join } from 'path';
+import { join, resolve } from 'path';
 import { existsSync, writeFileSync } from 'fs';
 
 let config: {
@@ -43,6 +43,9 @@ const getConfig = () => {
   if (loadedConfig.db.type === 'sqlite') {
     loadedConfig.db.database = loadedConfig.db.database.replace(/^~/, homedir())
   }
+
+  // 修复entities相对路径问题
+  loadedConfig.db.entities = loadedConfig.db.entities.map((item: string) => item.replace(/^dist/, resolve(__dirname, '..')))
 
   // 解决connectionOptions中属性为readonly问题
   config = loadedConfig;

@@ -12,6 +12,7 @@ export class SearchCommand implements yargs.CommandModule {
   builder(argv: yargs.Argv) {
     return argv
       .middleware([initConnection, () => (this.sshClientService = new SshClientService())])
+      .example('$0 search -k *server', 'Use * to match any character.')
       .option('k', {
         alias: 'keyword',
         describe: 'search keyword',

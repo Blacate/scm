@@ -17,7 +17,7 @@ export class SshClientService {
       },
       order: {
         category: 'ASC',
-        id: 'ASC',
+        alias: 'ASC',
       },
     });
   }
@@ -29,7 +29,7 @@ export class SshClientService {
       },
       order: {
         category: 'ASC',
-        id: 'ASC'
+        alias: 'ASC'
       }
     })
   }
