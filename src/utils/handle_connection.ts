@@ -1,9 +1,10 @@
 import { createConnection, getConnection, ConnectionOptions } from 'typeorm';
 import { getConfig } from './config';
+import { printError } from './print';
 
 const initConnection = async () => {
   await createConnection(getConfig().db).catch(err => {
-    console.log(err);
+    printError(err);
     process.exit();
   });
 };

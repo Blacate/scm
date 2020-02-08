@@ -3,6 +3,7 @@ import { SshClientService } from '../features/ssh_client/ssh_client.service';
 import { UpdateSshClient } from '../features/ssh_client/interfaces/update_ssh_client.interface';
 import { initConnection } from '../utils/handle_connection';
 import * as prompts from 'prompts';
+import { printNotExist, printItem } from '../utils/print';
 
 export class UpdateCommand implements yargs.CommandModule {
   private sshClientService: SshClientService;
@@ -54,7 +55,7 @@ export class UpdateCommand implements yargs.CommandModule {
       args.alias as string,
     );
     if (!oldSshClient) {
-      console.log(`Alias: ${args.alias} is not exist.`);
+      printNotExist(args.alias as string);
       return;
     }
     const data: UpdateSshClient = {};
@@ -122,6 +123,12 @@ export class UpdateCommand implements yargs.CommandModule {
       ]);
       Object.assign(data, promptsData);
     }
-    await this.sshClientService.update(args.alias as string, data);
+    const result = await this.sshClientService.update(
+      args.alias as string,
+      data,
+    );
+    if (!promptsFlag) {
+      printItem(result);
+    }
   }
 }

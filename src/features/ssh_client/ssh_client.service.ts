@@ -2,6 +2,7 @@ import { getConnection, Repository, Like } from 'typeorm';
 import { SshClient } from './ssh_client.entity';
 import { CreateSshClient } from './interfaces/create_ssh_client.interface';
 import { UpdateSshClient } from './interfaces/update_ssh_client.interface';
+import { printExist } from '../../utils/print';
 
 export class SshClientService {
   private readonly sshClientRepository: Repository<SshClient>;
@@ -75,7 +76,7 @@ export class SshClientService {
 
   async create(createSshClient: CreateSshClient) {
     if (await this.getByAlias(createSshClient.alias)) {
-      console.log(`Alias: ${createSshClient.alias} is exist.`);
+      printExist(createSshClient.alias);
       return;
     }
     const sshClient = this.sshClientRepository.create(createSshClient);
@@ -83,11 +84,9 @@ export class SshClientService {
   }
 
   async update(oldAlias: string, updateSshClient: UpdateSshClient) {
-    return await this.sshClientRepository.update(
-      {
-        alias: oldAlias,
-      },
-      updateSshClient,
+    const sshClient = await this.getByAlias(oldAlias);
+    return await this.sshClientRepository.save(
+      Object.assign(sshClient, updateSshClient),
     );
   }
 }

@@ -1,3 +1,4 @@
+// tslint:disable: no-console
 import { SshClient } from '../features/ssh_client/ssh_client.entity';
 
 const printItem = (sshClient: SshClient) => {
@@ -59,4 +60,16 @@ const printList = (sshClients: SshClient[]) => {
   });
 };
 
-export { printItem, printList };
+const printNotExist = (alias: string) => {
+  console.log(`Alias: ${alias} is not exist!`);
+};
+
+const printExist = (alias: string) => {
+  console.log(`Alias: ${alias} is exist.`);
+};
+
+const printError = err => {
+  console.log(err);
+};
+
+export { printItem, printList, printNotExist, printError, printExist };

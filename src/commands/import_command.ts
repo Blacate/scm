@@ -1,7 +1,7 @@
 import * as yargs from 'yargs';
 import { initConnection } from '../utils/handle_connection';
 import { SshClientService } from '../features/ssh_client/ssh_client.service';
-import { printItem, printList } from '../utils/print';
+import { printItem, printList, printError } from '../utils/print';
 import { join } from 'path';
 import { homedir } from 'os';
 
@@ -43,7 +43,7 @@ export class ImportCommand implements yargs.CommandModule {
       }
       printList(await this.sshClientService.fetchAll());
     } catch (e) {
-      console.log(e);
+      printError(e);
     }
   }
 }

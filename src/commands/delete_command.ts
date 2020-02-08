@@ -1,7 +1,7 @@
 import * as yargs from 'yargs';
 import { SshClientService } from '../features/ssh_client/ssh_client.service';
 import { initConnection } from '../utils/handle_connection';
-import { printItem } from '../utils/print';
+import { printItem, printNotExist } from '../utils/print';
 import * as prompts from 'prompts';
 
 export class DeleteCommand implements yargs.CommandModule {
@@ -37,7 +37,7 @@ export class DeleteCommand implements yargs.CommandModule {
         await this.sshClientService.deleteByAlias(args.alias as string);
       }
     } else {
-      console.log(`Alias: ${args.alias} is not exist!`);
+      printNotExist(args.alias as string);
     }
   }
 }

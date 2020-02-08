@@ -1,6 +1,6 @@
 import * as yargs from 'yargs';
 import { SshClientService } from '../features/ssh_client/ssh_client.service';
-import { printItem } from '../utils/print';
+import { printItem, printNotExist } from '../utils/print';
 import { initConnection } from '../utils/handle_connection';
 
 export class GetCommand implements yargs.CommandModule {
@@ -27,7 +27,7 @@ export class GetCommand implements yargs.CommandModule {
     if (result) {
       printItem(result);
     } else {
-      console.log(`Alias: ${args.alias} is not exist`);
+      printNotExist(args.alias as string);
     }
   }
 }
