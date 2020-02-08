@@ -21,10 +21,30 @@ export class SshClientService {
     });
   }
 
+  async fetchDeleted() {
+    return await this.sshClientRepository.find({
+      where: {
+        isDeleted: true,
+      },
+      order: {
+        category: 'ASC'
+      }
+    })
+  }
+
   async getByAlias(alias: string) {
     return await this.sshClientRepository.findOne({
       where: {
         alias,
+        isDeleted: false,
+      },
+    });
+  }
+
+  async getByCategory(category: string) {
+    return await this.sshClientRepository.find({
+      where: {
+        category,
         isDeleted: false,
       },
     });
