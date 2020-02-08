@@ -7,10 +7,11 @@
   "license": "MIT",
   "private": false,
   "bin": {
-    "scm": "./bin/scm.ts"
+    "scm": "./bin/scm.js"
   },
   "scripts": {
     "lint": "tslint -p tsconfig.json -c tslint.json",
+    "build": "rimraf dist && tsc -p tsconfig.json",
     "format": "prettier --write \"src/**/*.ts\""
   },
   "dependencies": {
@@ -22,8 +23,9 @@
   "devDependencies": {
     "@types/node": "^13.7.0",
     "@types/yargs": "^15.0.3",
-    "typescript": "^3.7.5",
     "prettier": "^1.19.1",
-    "tslint": "^6.0.0"
+    "rimraf": "^3.0.1",
+    "tslint": "^6.0.0",
+    "typescript": "^3.7.5"
   }
 }
