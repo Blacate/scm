@@ -1,6 +1,6 @@
 {
   "name": "node-scm",
-  "version": "0.0.1",
+  "version": "2.0.0",
   "description": "ssh config manager with sql",
   "repository": "https://github.com/Blacate/scm",
   "author": "Neail <blacated@gmail.com>",
