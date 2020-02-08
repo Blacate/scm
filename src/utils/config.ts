@@ -4,8 +4,8 @@ import { join, resolve } from 'path';
 import { existsSync, writeFileSync } from 'fs';
 
 let config: {
-  db: ConnectionOptions,
-}
+  db: ConnectionOptions;
+};
 
 const defaultConfig = `{
   "db": {
@@ -25,15 +25,15 @@ const defaultConfig = `{
     "synchronize": true
   }
 }
-`
+`;
 
 const getConfig = () => {
   if (config) return config;
 
-  const configPath = join(homedir(), '.ssh/scm_sql_application.json')
+  const configPath = join(homedir(), '.ssh/scm_sql_application.json');
 
   if (!existsSync(configPath)) {
-    writeFileSync(configPath, defaultConfig, 'utf8')
+    writeFileSync(configPath, defaultConfig, 'utf8');
   }
 
   // tslint:disable-next-line: no-var-requires
@@ -41,18 +41,20 @@ const getConfig = () => {
 
   // 修复sqlite中homedir为～的问题
   if (loadedConfig.db.type === 'sqlite') {
-    loadedConfig.db.database = loadedConfig.db.database.replace(/^~/, homedir())
+    loadedConfig.db.database = loadedConfig.db.database.replace(
+      /^~/,
+      homedir(),
+    );
   }
 
   // 修复entities相对路径问题
-  loadedConfig.db.entities = loadedConfig.db.entities.map((item: string) => item.replace(/^dist/, resolve(__dirname, '..')))
+  loadedConfig.db.entities = loadedConfig.db.entities.map((item: string) =>
+    item.replace(/^dist/, resolve(__dirname, '..')),
+  );
 
   // 解决connectionOptions中属性为readonly问题
   config = loadedConfig;
   return config;
+};
 
-}
-
-export {
-  getConfig
-}
+export { getConfig };

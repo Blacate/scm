@@ -40,7 +40,12 @@ const printList = (sshClients: SshClient[]) => {
   );
   console.log(
     '-'.repeat(
-      aliasLength + categoryLength + userLength + portLength + categoryLength + 15,
+      aliasLength +
+        categoryLength +
+        userLength +
+        portLength +
+        categoryLength +
+        15,
     ),
   );
   sshClients.forEach(sshClient => {

@@ -12,7 +12,10 @@ export class DeleteCommand implements yargs.CommandModule {
 
   builder(argv: yargs.Argv) {
     return argv
-      .middleware([initConnection, () => (this.sshClientService = new SshClientService())])
+      .middleware([
+        initConnection,
+        () => (this.sshClientService = new SshClientService()),
+      ])
       .option('a', {
         alias: 'alias',
         describe: 'ssh client alias',

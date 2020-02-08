@@ -12,7 +12,10 @@ export class AddCommand implements yargs.CommandModule {
 
   builder(argv: yargs.Argv) {
     return argv
-      .middleware([initConnection, () => (this.sshClientService = new SshClientService())])
+      .middleware([
+        initConnection,
+        () => (this.sshClientService = new SshClientService()),
+      ])
       .option('a', {
         alias: 'alias',
         describe: 'ssh client alias',
@@ -61,9 +64,11 @@ export class AddCommand implements yargs.CommandModule {
           initial: typeof item.alias === 'string' ? item.alias : '',
           validate: async clientName => {
             if (!clientName) {
-              return 'Alias is must!'
+              return 'Alias is must!';
             }
-            return await this.sshClientService.getByAlias(clientName) ? 'Already exist!' : true
+            return (await this.sshClientService.getByAlias(clientName))
+              ? 'Already exist!'
+              : true;
           },
         },
         {
@@ -71,7 +76,8 @@ export class AddCommand implements yargs.CommandModule {
           name: 'server',
           initial: typeof item.server === 'string' ? item.server : '',
           message: 'Server: ',
-          validate: inputServer => Boolean(inputServer) ? true : 'Server is must!'
+          validate: inputServer =>
+            Boolean(inputServer) ? true : 'Server is must!',
         },
         {
           type: 'text',
@@ -89,7 +95,7 @@ export class AddCommand implements yargs.CommandModule {
           type: 'text',
           name: 'category',
           message: 'Category: ',
-        }
+        },
       ]);
       await this.sshClientService.create({
         alias,

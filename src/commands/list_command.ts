@@ -12,17 +12,20 @@ export class ListCommand implements yargs.CommandModule {
 
   builder(argv: yargs.Argv) {
     return argv
-    .middleware([initConnection, () => (this.sshClientService = new SshClientService())])
-    .option('d', {
-      alias: 'deleted',
-      type: 'boolean',
-      describe: 'List deleted ssh clients.'
-    })
-    .option('c', {
-      alias: 'category',
-      describe: 'List ssh clients by category.',
-      type: 'string'
-    })
+      .middleware([
+        initConnection,
+        () => (this.sshClientService = new SshClientService()),
+      ])
+      .option('d', {
+        alias: 'deleted',
+        type: 'boolean',
+        describe: 'List deleted ssh clients.',
+      })
+      .option('c', {
+        alias: 'category',
+        describe: 'List ssh clients by category.',
+        type: 'string',
+      });
   }
 
   async handler(args: yargs.Arguments) {
@@ -30,7 +33,9 @@ export class ListCommand implements yargs.CommandModule {
     if (args.deleted) {
       result = await this.sshClientService.fetchDeleted();
     } else if (typeof args.category === 'string') {
-      result = await this.sshClientService.getByCategory(args.category as string);
+      result = await this.sshClientService.getByCategory(
+        args.category as string,
+      );
     } else {
       result = await this.sshClientService.fetchAll();
     }

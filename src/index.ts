@@ -5,9 +5,9 @@ import { GetCommand } from './commands/get_command';
 import { ListCommand } from './commands/list_command';
 import { SearchCommand } from './commands/search_command';
 import { UpdateCommand } from './commands/update_command';
-import { ImportCommand } from './commands/import_command'
+import { ImportCommand } from './commands/import_command';
 import { closeConnection } from './utils/handle_connection';
-import { writeConfig } from './utils/file'
+import { writeConfig } from './utils/file';
 
 const main = async () => {
   // tslint:disable-next-line: no-unused-expression

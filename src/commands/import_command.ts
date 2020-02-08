@@ -2,7 +2,7 @@ import * as yargs from 'yargs';
 import { initConnection } from '../utils/handle_connection';
 import { SshClientService } from '../features/ssh_client/ssh_client.service';
 import { printItem, printList } from '../utils/print';
-import { join } from 'path'
+import { join } from 'path';
 import { homedir } from 'os';
 
 export class ImportCommand implements yargs.CommandModule {
@@ -13,16 +13,19 @@ export class ImportCommand implements yargs.CommandModule {
 
   builder(argv: yargs.Argv) {
     return argv
-      .middleware([initConnection, () => (this.sshClientService = new SshClientService())])
+      .middleware([
+        initConnection,
+        () => (this.sshClientService = new SshClientService()),
+      ])
       .option('path', {
         describe: 'old config path',
         type: 'string',
-      })
+      });
   }
 
   async handler(args: yargs.Arguments) {
     try {
-      const path = args.path as string || join(homedir(), '.ssh/scm.json');
+      const path = (args.path as string) || join(homedir(), '.ssh/scm.json');
       const data = require(path);
       if (data && data.clients) {
         for (const [host, item] of Object.entries<{
@@ -35,13 +38,12 @@ export class ImportCommand implements yargs.CommandModule {
             server: item.hostname,
             user: item.user,
             port: item.port,
-          })
+          });
         }
       }
-      printList(await this.sshClientService.fetchAll())
-    } catch(e) {
-      console.log(e)
+      printList(await this.sshClientService.fetchAll());
+    } catch (e) {
+      console.log(e);
     }
-
   }
 }

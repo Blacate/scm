@@ -29,9 +29,9 @@ export class SshClientService {
       },
       order: {
         category: 'ASC',
-        alias: 'ASC'
-      }
-    })
+        alias: 'ASC',
+      },
+    });
   }
 
   async getByAlias(alias: string) {
@@ -75,7 +75,7 @@ export class SshClientService {
 
   async create(createSshClient: CreateSshClient) {
     if (await this.getByAlias(createSshClient.alias)) {
-      console.log(`Alias: ${createSshClient.alias} is exist.`)
+      console.log(`Alias: ${createSshClient.alias} is exist.`);
       return;
     }
     const sshClient = this.sshClientRepository.create(createSshClient);

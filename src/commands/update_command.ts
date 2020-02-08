@@ -88,7 +88,9 @@ export class UpdateCommand implements yargs.CommandModule {
           initial: oldSshClient.alias,
           validate: async clientName => {
             if (oldSshClient.alias !== clientName) {
-              return await this.sshClientService.getByAlias(clientName)? 'Already exist!': true
+              return (await this.sshClientService.getByAlias(clientName))
+                ? 'Already exist!'
+                : true;
             }
             return true;
           },
