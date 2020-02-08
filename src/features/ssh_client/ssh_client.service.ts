@@ -53,7 +53,7 @@ export class SshClientService {
     return await this.sshClientRepository.save(sshClient)
   }
 
-  async upate(oldAlias: string, updateSshClient: UpdateSshClient) {
+  async update(oldAlias: string, updateSshClient: UpdateSshClient) {
     return await this.sshClientRepository.update({
       alias: oldAlias,
     }, updateSshClient)

@@ -15,6 +15,7 @@ export class ListCommand implements yargs.CommandModule {
   }
   
   async handler(args: yargs.Arguments) {
+    // todo --deleted --category
     const result = await this.sshClientService.fetchAll();
     printList(result);
   }

@@ -52,10 +52,13 @@ export class AddCommand implements yargs.CommandModule {
       category: args.category as string,
     };
     if (!item.alias || !item.server) {
+      // todo use prompts
       console.log('alias and server is must')
       process.exit()
+      const result = await this.sshClientService.create(item);
+    } else {
+      const result = await this.sshClientService.create(item);
+      printItem(result)
     }
-    const result = await this.sshClientService.create(item);
-    printItem(result)
   }
 }

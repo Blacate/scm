@@ -20,6 +20,10 @@ export class GetCommand implements yargs.CommandModule {
   
   async handler(args: yargs.Arguments) {
     const result = await this.sshClientService.getByAlias(args.alias as string)
-    printItem(result)
+    if (result) {
+      printItem(result)
+    } else {
+      console.log(`Alias: ${args.alias} is not exist`)
+    }
   }
 }

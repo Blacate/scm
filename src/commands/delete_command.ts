@@ -10,9 +10,20 @@ export class DeleteCommand implements yargs.CommandModule {
   builder(argv: yargs.Argv) {
     return argv
       .middleware(() => this.sshClientService = new SshClientService)
+      .option('a', {
+        alias: 'alias',
+        describe: 'ssh client alias',
+        demand: true,
+      })
   }
   
   async handler(args: yargs.Arguments) {
-    console.log(await this.sshClientService.fetchAll())
+    const result = await this.sshClientService.getByAlias(args.alias as string)
+    if (result) {
+      // todo: ensure
+      await this.sshClientService.deleteByAlias(args.alias as string)
+    } else {
+      console.log(`Alias: ${args.alias} is not exist!`)
+    }
   }
 }

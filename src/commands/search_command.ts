@@ -1,5 +1,6 @@
 import * as yargs from 'yargs';
 import { SshClientService } from '../features/ssh_client/ssh_client.service';
+import { printList } from '../utils/print';
 
 export class SearchCommand implements yargs.CommandModule {
   private sshClientService: SshClientService;
@@ -10,9 +11,18 @@ export class SearchCommand implements yargs.CommandModule {
   builder(argv: yargs.Argv) {
     return argv
       .middleware(() => this.sshClientService = new SshClientService)
+      .option('k', {
+        alias: 'keyword',
+        describe: 'search keyword',
+        demand: true,
+        type: 'string'
+      })
   }
   
   async handler(args: yargs.Arguments) {
-    console.log(await this.sshClientService.fetchAll())
+    const originKeyword = (args.keyword as string).trim();
+    const keyword = /\*/.test(originKeyword) ? originKeyword.replace(/\*/g, '%') : `*${originKeyword}*`.replace(/\*/g, '%')
+    const result = await this.sshClientService.search(keyword);
+    printList(result)
   }
 }
