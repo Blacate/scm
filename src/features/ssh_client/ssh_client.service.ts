@@ -52,6 +52,10 @@ export class SshClientService {
   }
 
   async create(createSshClient: CreateSshClient) {
+    if (await this.getByAlias(createSshClient.alias)) {
+      console.log(`Alias: ${createSshClient.alias} is exist.`)
+      return;
+    }
     const sshClient = this.sshClientRepository.create(createSshClient);
     return await this.sshClientRepository.save(sshClient);
   }
