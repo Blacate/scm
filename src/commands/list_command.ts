@@ -29,7 +29,7 @@ export class ListCommand implements yargs.CommandModule {
     let result: SshClient[];
     if (args.deleted) {
       result = await this.sshClientService.fetchDeleted();
-    } else if (args.category) {
+    } else if (typeof args.category === 'string') {
       result = await this.sshClientService.getByCategory(args.category as string);
     } else {
       result = await this.sshClientService.fetchAll();

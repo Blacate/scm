@@ -2,6 +2,7 @@ import * as yargs from 'yargs';
 import { initConnection } from '../utils/handle_connection';
 import { SshClientService } from '../features/ssh_client/ssh_client.service';
 import { printItem } from '../utils/print';
+import * as prompts from 'prompts';
 
 export class AddCommand implements yargs.CommandModule {
   private sshClientService: SshClientService;
@@ -38,6 +39,7 @@ export class AddCommand implements yargs.CommandModule {
         alias: 'category',
         describe: 'ssh client category',
         type: 'string',
+        default: '',
       })
       .implies('a', 's');
   }
@@ -51,10 +53,45 @@ export class AddCommand implements yargs.CommandModule {
       category: args.category as string,
     };
     if (!item.alias || !item.server) {
-      // todo use prompts
-      console.log('alias and server is must');
-      process.exit();
-      const result = await this.sshClientService.create(item);
+      const { alias, server, user, port, category } = await prompts([
+        {
+          type: 'text',
+          name: 'alias',
+          message: 'Alias: ',
+          initial: typeof item.alias === 'string' ? item.alias : '',
+          validate: async clientName => (await this.sshClientService.getByAlias(clientName) ? 'Already exist!' : true),
+        },
+        {
+          type: 'text',
+          name: 'server',
+          initial: typeof item.server === 'string' ? item.server : '',
+          message: 'Server: ',
+        },
+        {
+          type: 'text',
+          name: 'user',
+          message: 'User: ',
+          initial: 'root',
+        },
+        {
+          type: 'number',
+          name: 'port',
+          message: 'Port: ',
+          initial: 22,
+        },
+        {
+          type: 'text',
+          name: 'category',
+          message: 'Category: ',
+        }
+      ]);
+      await this.sshClientService.create({
+        alias,
+        server,
+        port,
+        user,
+        category,
+      });
     } else {
       const result = await this.sshClientService.create(item);
       printItem(result);

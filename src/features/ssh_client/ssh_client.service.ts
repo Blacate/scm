@@ -17,6 +17,7 @@ export class SshClientService {
       },
       order: {
         category: 'ASC',
+        id: 'ASC',
       },
     });
   }
@@ -27,7 +28,8 @@ export class SshClientService {
         isDeleted: true,
       },
       order: {
-        category: 'ASC'
+        category: 'ASC',
+        id: 'ASC'
       }
     })
   }
